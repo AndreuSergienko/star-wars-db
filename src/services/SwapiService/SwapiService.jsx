@@ -1,6 +1,6 @@
 import { APP_URLS } from "../../constants";
 
-export class SwapiService {
+class SwapiService {
 	constructor() {
 		this._apiBase = "https://swapi.dev/api";
 	}
@@ -12,15 +12,35 @@ export class SwapiService {
 			throw new Error(`Could not fetch ${url}, received ${res.status}`);
 		}
 
-		const data = await res.json();
-		return data;
+		return await res.json();
 	}
 
-	getAllPeople() {
-		return this.getResource(APP_URLS.people);
+	async getAllPeople() {
+		const people = await this.getResource(APP_URLS.people);
+		return people.results;
 	}
 
 	getPerson(id) {
 		return this.getResource(`${APP_URLS.people}/${id}`);
 	}
+
+	async getAllPlanets() {
+		const planets = await this.getResource(APP_URLS.planets);
+		return planets.results;
+	}
+
+	getPlanet(id) {
+		return this.getResource(`${APP_URLS.planets}/${id}`);
+	}
+
+	async getAllStarships() {
+		const starships = await this.getResource(APP_URLS.starships);
+		return starships.results;
+	}
+
+	getStarship(id) {
+		return this.getResource(`${APP_URLS.starships}/${id}`);
+	}
 }
+
+export const Swapi = new SwapiService();
