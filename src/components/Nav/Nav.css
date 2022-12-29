@@ -1,0 +1,11 @@
+.nav-list {
+   display: flex;
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+.nav-link {
+   font-size: 21px;
+   text-transform: capitalize;
+}
