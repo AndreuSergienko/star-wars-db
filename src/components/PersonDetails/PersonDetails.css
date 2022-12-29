@@ -1,0 +1,33 @@
+.person-details {
+   margin-top: 40px;
+}
+
+.person-details-inner {
+   background: rgb(66 65 65);
+   display: flex;
+   align-items: flex-start;
+   padding: 15px 0 15px 20px;
+   gap: 30px;
+}
+
+.person-details-img {
+   width: 200px;
+   height: 200px;
+   border: 1px solid #fff;
+}
+
+.person-details-title {
+   font-size: 26px;
+   color: #fff;
+}
+
+.person-details-params {
+   margin-top: 20px;
+   padding-left: 20px;
+}
+
+.person-details-param {
+   display: block;
+   padding: 10px 0;
+   border-top: 1px solid #fff;
+}
