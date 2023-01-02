@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Header.css";
 
-import { Nav } from "../Nav";
+import { Nav } from "../nav";
 
 export class Header extends Component {
 	render() {

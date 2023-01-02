@@ -1,0 +1,12 @@
+.error-indicator {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.error-indicator-title {
+   margin-top: 10px;
+   font-size: 18px;
+   color: orange
+}
