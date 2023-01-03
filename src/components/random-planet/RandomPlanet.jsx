@@ -43,7 +43,6 @@ export class RandomPlanet extends Component {
 
 	componentDidMount() {
 		this.updatePlanet();
-		setInterval(this.updatePlanet, 4000);
 	}
 
 	componentWillUnmount() {

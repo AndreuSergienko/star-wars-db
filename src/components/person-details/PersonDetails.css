@@ -1,24 +1,39 @@
 .person-details {
-   margin-top: 40px;
+   flex: 0 1 400px;
+   max-height: 100%;
 }
 
 .person-details-inner {
+   height: 100%;
    background: rgb(66 65 65);
    display: flex;
-   align-items: flex-start;
-   padding: 15px 0 15px 20px;
+   border-radius: 20px;
+   border: 1px solid #ccc;
+   justify-content: center;
+   align-items: center;
    gap: 30px;
 }
 
 .person-details-img {
-   width: 200px;
+   width: 150px;
    height: 200px;
-   border: 1px solid #fff;
+   box-shadow: 0 0 10px #ccc;
+   border-radius: 20px;
+   overflow: hidden;
+}
+
+.person-details-img img {
+   width: 100%;
+   height: 100%;
 }
 
 .person-details-title {
    font-size: 26px;
    color: #fff;
+   max-width: 150px;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
 }
 
 .person-details-params {
@@ -30,4 +45,9 @@
    display: block;
    padding: 10px 0;
    border-top: 1px solid #fff;
+}
+
+.person-details-warn {
+   color: orange;
+   font-size: 19px;
 }

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import "./PersonsList.css";
+import "./ItemsList.css";
 
 import { Spinner } from "../spinner";
 
 import { Swapi } from "../../services";
-import { PersonsItem } from "./persons-item";
+
 import { ErrorIndicator } from "../error-indicator";
 
-export class PersonsList extends Component {
+export class ItemsList extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -15,7 +15,6 @@ export class PersonsList extends Component {
 			isLoader: true,
 			isError: false,
 		};
-		this.loadPersons();
 	}
 
 	loadPersons = () => {
@@ -39,26 +38,43 @@ export class PersonsList extends Component {
 		}));
 	};
 
+	renderItems(items) {
+		if (!items) return;
+		return items.map(({ name, id }) => {
+			return (
+				<li
+					className="list-item"
+					key={id}
+					onClick={() => this.props.onItemSelected(id)}
+				>
+					<span className="item">{name}</span>
+				</li>
+			);
+		});
+	}
+
+	componentDidMount() {
+		this.loadPersons();
+	}
+
+	componentDidCatch() {
+		this.onError();
+	}
+
 	render() {
 		const { persons, isLoader, isError } = this.state;
 
 		const error = isError ? <ErrorIndicator /> : null;
 		const loader = isLoader ? <Spinner /> : null;
-		const people = !(isLoader || isError)
-			? persons?.map(({ name }) => {
-					return <PersonsItem key={name} name={name} />;
-			  })
-			: null;
+		const people = !(isLoader || isError) ? this.renderItems(persons) : null;
 
 		return (
-			<div className="persons">
-				<div className="container">
-					<ul className="persons-list">
-						{loader}
-						{error}
-						{people}
-					</ul>
-				</div>
+			<div className="items">
+				<ul className="items-list">
+					{loader}
+					{error}
+					{people}
+				</ul>
 			</div>
 		);
 	}

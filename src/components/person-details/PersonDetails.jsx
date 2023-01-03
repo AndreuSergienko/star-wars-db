@@ -1,30 +1,53 @@
 import React, { Component } from "react";
+
+import { Swapi } from "../../services";
+
 import "./PersonDetails.css";
 
+import { PersonView } from "./person-view";
+import { Warn } from "./warn";
+
 export class PersonDetails extends Component {
+	constructor() {
+		super();
+		this.state = {
+			person: null,
+		};
+	}
+
+	updatePerson() {
+		const { personId } = this.props;
+		if (!personId) return;
+
+		Swapi.getPerson(personId).then((person) => {
+			this.setState((state) => ({
+				...state,
+				person,
+			}));
+		});
+	}
+
+	componentDidMount() {
+		this.updatePerson();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.personId !== prevProps.personId) {
+			this.updatePerson();
+		}
+	}
+
 	render() {
+		const { person } = this.state;
+
+		const warning = !person ? <Warn /> : null;
+		const personView = person ? <PersonView person={person} /> : null;
+
 		return (
 			<div className="person-details">
-				<div className="container">
-					<div className="person-details-inner">
-						<div className="person-details-img">
-							<img src="" alt="person" />
-						</div>
-						<div className="person-details-info">
-							<h4 className="person-details-title">R2-D2</h4>
-							<div className="person-details-params">
-								<span className="person-details-param">
-									Gender: male
-								</span>
-								<span className="person-details-param">
-									Birth Year: 43
-								</span>
-								<span className="person-details-param">
-									Eye Color: red
-								</span>
-							</div>
-						</div>
-					</div>
+				<div className="person-details-inner">
+					{warning}
+					{personView}
 				</div>
 			</div>
 		);
