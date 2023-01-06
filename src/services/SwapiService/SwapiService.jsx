@@ -15,37 +15,37 @@ class SwapiService {
 		return await res.json();
 	}
 
-	async getAllPeople() {
+	getAllPeople = async () => {
 		const people = await this.getResource(APP_URLS.people);
 		return Promise.resolve(people.results.map(this._transformPerson));
-	}
+	};
 
-	async getPerson(id) {
+	getPerson = async (id) => {
 		const person = await this.getResource(`${APP_URLS.people}/${id}`);
 		return Promise.resolve(this._transformPerson(person));
-	}
+	};
 
-	async getAllPlanets() {
+	getAllPlanets = async () => {
 		const planets = await this.getResource(APP_URLS.planets);
 		console.log(planets.results.map(this._transformPlanet));
-	}
+	};
 
-	async getPlanet(id) {
+	getPlanet = async (id) => {
 		const planet = await this.getResource(`${APP_URLS.planets}/${id}`);
 		return Promise.resolve(this._transformPlanet(planet));
-	}
+	};
 
-	async getAllStarships() {
+	getAllStarships = async () => {
 		const starships = await this.getResource(APP_URLS.starships);
 		return Promise.resolve(starships.results.map(this._transformStarship));
-	}
+	};
 
-	async getStarship(id) {
+	getStarship = async (id) => {
 		const starship = await this.getResource(`${APP_URLS.starships}/${id}`);
 		return Promise.resolve(this._transformStarship(starship));
-	}
+	};
 
-	_extractId(str) {
+	_extractId = (str) => {
 		const idRegExp = /\/([0-9]*)\/$/gm;
 
 		return +str
@@ -53,7 +53,7 @@ class SwapiService {
 			.split("")
 			.filter((char) => !isNaN(parseInt(char)))
 			.join("");
-	}
+	};
 
 	_transformStarship = (starship) => {
 		const id = this._extractId(starship.url);

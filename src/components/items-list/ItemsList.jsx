@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./ItemsList.css";
 
 import { Spinner } from "../spinner";
-
-import { Swapi } from "../../services";
 
 import { ErrorIndicator } from "../error-indicator";
 
@@ -11,20 +9,20 @@ export class ItemsList extends Component {
 	constructor() {
 		super();
 		this.state = {
-			persons: null,
+			items: null,
 			isLoader: true,
 			isError: false,
 		};
 	}
 
-	loadPersons = () => {
-		Swapi.getAllPeople().then(this.onPeopleLoaded).catch(this.onError);
+	loadData = () => {
+		this.props.getData().then(this.onDataLoaded).catch(this.onError);
 	};
 
-	onPeopleLoaded = (persons) => {
+	onDataLoaded = (items) => {
 		this.setState((state) => ({
 			...state,
-			persons,
+			items,
 			isLoader: false,
 			isError: false,
 		}));
@@ -54,7 +52,7 @@ export class ItemsList extends Component {
 	}
 
 	componentDidMount() {
-		this.loadPersons();
+		this.loadData();
 	}
 
 	componentDidCatch() {
@@ -62,18 +60,20 @@ export class ItemsList extends Component {
 	}
 
 	render() {
-		const { persons, isLoader, isError } = this.state;
+		const { items, isLoader, isError } = this.state;
 
 		const error = isError ? <ErrorIndicator /> : null;
 		const loader = isLoader ? <Spinner /> : null;
-		const people = !(isLoader || isError) ? this.renderItems(persons) : null;
+		const displayItems = !(isLoader || isError)
+			? this.renderItems(items)
+			: null;
 
 		return (
 			<div className="items">
 				<ul className="items-list">
 					{loader}
 					{error}
-					{people}
+					{displayItems}
 				</ul>
 			</div>
 		);

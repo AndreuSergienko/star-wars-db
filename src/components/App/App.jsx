@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import { Header, RandomPlanet, ItemsList, PersonDetails, Spinner } from "..";
-import { PeoplePage } from "../pages";
+import { Header, RandomPlanet } from "..";
+import { PeoplePage, StarshipsPage } from "../pages";
 
 export class App extends Component {
 	render() {
@@ -11,6 +11,7 @@ export class App extends Component {
 				<Header />
 				<RandomPlanet />
 				<PeoplePage />
+				<StarshipsPage />
 			</div>
 		);
 	}

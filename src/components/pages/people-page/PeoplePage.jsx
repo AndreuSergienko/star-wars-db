@@ -1,43 +1,47 @@
-import { Component, Fragment } from 'react'
+import { Component, Fragment } from "react";
 
-import { ItemsList, PersonDetails, ErrorIndicator } from '../..'
+import { ItemsList, PersonDetails, ErrorIndicator } from "../..";
+import { Swapi } from "../../../services";
 
 export class PeoplePage extends Component {
 	constructor() {
-		super()
+		super();
 
 		this.state = {
 			selectedPerson: null,
 			hasError: false,
-		}
+		};
 	}
 
 	onPersonSelected = (id) => {
 		this.setState((state) => ({
 			...state,
 			selectedPerson: id,
-		}))
-	}
+		}));
+	};
 
 	componentDidCatch() {
-		this.setState((state) => ({ ...state, hasError: true }))
+		this.setState((state) => ({ ...state, hasError: true }));
 	}
 
 	render() {
-		const { selectedPerson, hasError } = this.state
-		const error = hasError ? <ErrorIndicator /> : null
+		const { selectedPerson, hasError } = this.state;
+		const error = hasError ? <ErrorIndicator /> : null;
 		const content = !hasError ? (
 			<Fragment>
-				<ItemsList onItemSelected={this.onPersonSelected} />
+				<ItemsList
+					getData={Swapi.getAllPeople}
+					onItemSelected={this.onPersonSelected}
+				/>
 				<PersonDetails personId={selectedPerson} />
 			</Fragment>
-		) : null
+		) : null;
 
 		return (
-			<div className='container d-flex gap-3 mt-5 list-details-row'>
+			<div className="container d-flex gap-3 mt-5 list-details-row">
 				{error}
 				{content}
 			</div>
-		)
+		);
 	}
 }
