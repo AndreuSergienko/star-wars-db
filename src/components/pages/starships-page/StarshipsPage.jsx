@@ -30,6 +30,14 @@ export class StarshipsPage extends Component {
 		const content = !hasError ? (
 			<Fragment>
 				<ItemsList
+					renderItem={({ name, length }) => (
+						<Fragment>
+							<span className="item d-inline-block mx-3">{name}</span>
+							<span className="item d-inline-block mx-3">
+								Length: {length}
+							</span>
+						</Fragment>
+					)}
 					getData={Swapi.getAllStarships}
 					onItemSelected={this.onStarshipSelected}
 				/>

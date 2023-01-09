@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 import { Header, RandomPlanet } from "..";
-import { PeoplePage, StarshipsPage } from "../pages";
+import { PeoplePage, StarshipsPage, PlanetPage } from "../pages";
 
 export class App extends Component {
 	render() {
@@ -12,6 +12,7 @@ export class App extends Component {
 				<RandomPlanet />
 				<PeoplePage />
 				<StarshipsPage />
+				<PlanetPage />
 			</div>
 		);
 	}

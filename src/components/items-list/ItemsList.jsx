@@ -38,14 +38,14 @@ export class ItemsList extends Component {
 
 	renderItems(items) {
 		if (!items) return;
-		return items.map(({ name, id }) => {
+		return items.map(({ id, ...others }) => {
 			return (
 				<li
 					className="list-item"
 					key={id}
 					onClick={() => this.props.onItemSelected(id)}
 				>
-					<span className="item">{name}</span>
+					{this.props.renderItem(others)}
 				</li>
 			);
 		});

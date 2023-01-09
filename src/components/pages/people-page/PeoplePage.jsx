@@ -30,6 +30,14 @@ export class PeoplePage extends Component {
 		const content = !hasError ? (
 			<Fragment>
 				<ItemsList
+					renderItem={({ name, gender }) => (
+						<Fragment>
+							<span className="item d-inline-block mx-3">{name}</span>
+							<span className="item d-inline-block mx-3">
+								Gender: {gender}
+							</span>
+						</Fragment>
+					)}
 					getData={Swapi.getAllPeople}
 					onItemSelected={this.onPersonSelected}
 				/>
