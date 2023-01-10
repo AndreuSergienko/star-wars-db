@@ -1,6 +1,6 @@
 import { Component, Fragment } from "react";
 
-import { ItemsList, ErrorIndicator, StarshipDetails } from "../..";
+import { ErrorBoundary, ItemsList, ItemDetails, Row } from "../..";
 import { Swapi } from "../../../services";
 
 export class StarshipsPage extends Component {
@@ -9,7 +9,6 @@ export class StarshipsPage extends Component {
 
 		this.state = {
 			selectedStarship: null,
-			hasError: false,
 		};
 	}
 
@@ -20,36 +19,41 @@ export class StarshipsPage extends Component {
 		}));
 	};
 
-	componentDidCatch() {
-		this.setState((state) => ({ ...state, hasError: true }));
-	}
-
 	render() {
-		const { selectedStarship, hasError } = this.state;
-		const error = hasError ? <ErrorIndicator /> : null;
-		const content = !hasError ? (
-			<Fragment>
-				<ItemsList
-					renderItem={({ name, length }) => (
-						<Fragment>
-							<span className="item d-inline-block mx-3">{name}</span>
-							<span className="item d-inline-block mx-3">
-								Length: {length}
-							</span>
-						</Fragment>
-					)}
-					getData={Swapi.getAllStarships}
-					onItemSelected={this.onStarshipSelected}
-				/>
-				<StarshipDetails starshipId={selectedStarship} />
-			</Fragment>
-		) : null;
+		const { selectedStarship } = this.state;
+		const itemsList = (
+			<ItemsList
+				getData={Swapi.getAllStarships}
+				onItemSelected={this.onStarshipSelected}
+			>
+				{({ name, length }) => (
+					<Fragment>
+						<span className="item d-inline-block mx-3">{name}</span>
+						<span className="item d-inline-block mx-3">
+							Length: {length}
+						</span>
+					</Fragment>
+				)}
+			</ItemsList>
+		);
+		const starshipDetails = (
+			<ItemDetails
+				getParamsArray={(item) => {
+					const usedParams = ["length", "crew", "passengers"];
+
+					return Object.entries(item).filter(([key, _]) =>
+						usedParams.includes(key)
+					);
+				}}
+				getItem={Swapi.getStarship}
+				itemId={selectedStarship}
+			/>
+		);
 
 		return (
-			<div className="container d-flex gap-3 mt-5 list-details-row">
-				{error}
-				{content}
-			</div>
+			<ErrorBoundary>
+				<Row left={itemsList} right={starshipDetails} />
+			</ErrorBoundary>
 		);
 	}
 }

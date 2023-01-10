@@ -1,6 +1,7 @@
 import { Component, Fragment } from "react";
 
-import { ItemsList, PersonDetails, ErrorIndicator } from "../..";
+import { ItemsList, ItemDetails, Row, ErrorBoundary } from "../..";
+
 import { Swapi } from "../../../services";
 
 export class PeoplePage extends Component {
@@ -9,7 +10,6 @@ export class PeoplePage extends Component {
 
 		this.state = {
 			selectedPerson: null,
-			hasError: false,
 		};
 	}
 
@@ -20,36 +20,41 @@ export class PeoplePage extends Component {
 		}));
 	};
 
-	componentDidCatch() {
-		this.setState((state) => ({ ...state, hasError: true }));
-	}
-
 	render() {
-		const { selectedPerson, hasError } = this.state;
-		const error = hasError ? <ErrorIndicator /> : null;
-		const content = !hasError ? (
-			<Fragment>
-				<ItemsList
-					renderItem={({ name, gender }) => (
-						<Fragment>
-							<span className="item d-inline-block mx-3">{name}</span>
-							<span className="item d-inline-block mx-3">
-								Gender: {gender}
-							</span>
-						</Fragment>
-					)}
-					getData={Swapi.getAllPeople}
-					onItemSelected={this.onPersonSelected}
-				/>
-				<PersonDetails personId={selectedPerson} />
-			</Fragment>
-		) : null;
+		const { selectedPerson } = this.state;
+		const itemsList = (
+			<ItemsList
+				getData={Swapi.getAllPeople}
+				onItemSelected={this.onPersonSelected}
+			>
+				{({ name, gender }) => (
+					<Fragment>
+						<span className="item d-inline-block mx-3">{name}</span>
+						<span className="item d-inline-block mx-3">
+							Gender: {gender}
+						</span>
+					</Fragment>
+				)}
+			</ItemsList>
+		);
+		const personDetails = (
+			<ItemDetails
+				getParamsArray={(item) => {
+					const usedParams = ["gender", "birthYear", "eyeColor"];
+
+					return Object.entries(item).filter(([key, _]) =>
+						usedParams.includes(key)
+					);
+				}}
+				getItem={Swapi.getPerson}
+				itemId={selectedPerson}
+			/>
+		);
 
 		return (
-			<div className="container d-flex gap-3 mt-5 list-details-row">
-				{error}
-				{content}
-			</div>
+			<ErrorBoundary>
+				<Row left={itemsList} right={personDetails} />
+			</ErrorBoundary>
 		);
 	}
 }

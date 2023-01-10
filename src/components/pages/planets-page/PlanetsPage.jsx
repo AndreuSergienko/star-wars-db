@@ -1,6 +1,6 @@
 import { Component, Fragment } from "react";
 
-import { ItemsList, PlanetDetails, ErrorIndicator } from "../..";
+import { ItemsList, ItemDetails, ErrorBoundary, Row } from "../..";
 import { Swapi } from "../../../services";
 
 export class PlanetPage extends Component {
@@ -9,7 +9,6 @@ export class PlanetPage extends Component {
 
 		this.state = {
 			selectedPlanet: null,
-			hasError: false,
 		};
 	}
 
@@ -20,36 +19,42 @@ export class PlanetPage extends Component {
 		}));
 	};
 
-	componentDidCatch() {
-		this.setState((state) => ({ ...state, hasError: true }));
-	}
-
 	render() {
-		const { selectedPlanet, hasError } = this.state;
-		const error = hasError ? <ErrorIndicator /> : null;
-		const content = !hasError ? (
-			<Fragment>
-				<ItemsList
-					renderItem={({ name, diameter }) => (
-						<Fragment>
-							<span className="item d-inline-block mx-3">{name}</span>
-							<span className="item d-inline-block mx-3">
-								Diameter: {diameter}
-							</span>
-						</Fragment>
-					)}
-					getData={Swapi.getAllPlanets}
-					onItemSelected={this.onPlanetSelected}
-				/>
-				<PlanetDetails planetId={selectedPlanet} />
-			</Fragment>
-		) : null;
+		const { selectedPlanet } = this.state;
+		const itemsList = (
+			<ItemsList
+				getData={Swapi.getAllPlanets}
+				onItemSelected={this.onPlanetSelected}
+			>
+				{({ name, diameter }) => (
+					<Fragment>
+						<span className="item d-inline-block mx-3">{name}</span>
+						<span className="item d-inline-block mx-3">
+							Diameter: {diameter}
+						</span>
+					</Fragment>
+				)}
+			</ItemsList>
+		);
+
+		const planetDetails = (
+			<ItemDetails
+				getParamsArray={(item) => {
+					const usedParams = ["climate", "diameter", "rotationPeriod"];
+
+					return Object.entries(item).filter(([key, _]) =>
+						usedParams.includes(key)
+					);
+				}}
+				getItem={Swapi.getPlanet}
+				itemId={selectedPlanet}
+			/>
+		);
 
 		return (
-			<div className="container d-flex gap-3 mt-5 list-details-row">
-				{error}
-				{content}
-			</div>
+			<ErrorBoundary>
+				<Row left={itemsList} right={planetDetails} />
+			</ErrorBoundary>
 		);
 	}
 }

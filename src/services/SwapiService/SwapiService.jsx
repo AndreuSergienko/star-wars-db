@@ -1,4 +1,4 @@
-import { APP_URLS } from "../../constants";
+import { APP_URLS, APP_CATEGORIES } from "../../constants";
 
 class SwapiService {
 	constructor() {
@@ -45,6 +45,10 @@ class SwapiService {
 		return Promise.resolve(this._transformStarship(starship));
 	};
 
+	getImage = (category, id) => {
+		return `https://starwars-visualguide.com/assets/img/${category}/${id}.jpg`;
+	};
+
 	_extractId = (str) => {
 		const idRegExp = /\/([0-9]*)\/$/gm;
 
@@ -59,6 +63,7 @@ class SwapiService {
 		const id = this._extractId(starship.url);
 		return {
 			id,
+			image: this.getImage(APP_CATEGORIES.starships, id),
 			name: starship.name,
 			model: starship.model,
 			manufacturer: starship.manufacturer,
@@ -74,6 +79,7 @@ class SwapiService {
 		const id = this._extractId(person.url);
 		return {
 			id,
+			image: this.getImage(APP_CATEGORIES.characters, id),
 			name: person.name,
 			gender: person.gender,
 			birthYear: person.birth_year,
@@ -85,6 +91,7 @@ class SwapiService {
 		const id = this._extractId(planet.url);
 		return {
 			id,
+			image: this.getImage(APP_CATEGORIES.planets, id),
 			name: planet.name,
 			diameter: planet.diameter,
 			rotationPeriod: planet.rotation_period,

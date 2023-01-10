@@ -45,7 +45,7 @@ export class ItemsList extends Component {
 					key={id}
 					onClick={() => this.props.onItemSelected(id)}
 				>
-					{this.props.renderItem(others)}
+					{this.props.children(others)}
 				</li>
 			);
 		});
