@@ -7,3 +7,5 @@ export * from "./random-planet";
 export * from "./row";
 export * from "./items-list";
 export * from "./item-details";
+export * from "./record";
+export * from "./hoc-helper";

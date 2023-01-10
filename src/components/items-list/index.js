@@ -1,1 +1,3 @@
-export * from "./ItemsList";
+import ItemsList from "./ItemsList";
+
+export default ItemsList;

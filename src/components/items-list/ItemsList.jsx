@@ -1,41 +1,7 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import "./ItemsList.css";
 
-import { Spinner } from "../spinner";
-
-import { ErrorIndicator } from "../error-indicator";
-
-export class ItemsList extends Component {
-	constructor() {
-		super();
-		this.state = {
-			items: null,
-			isLoader: true,
-			isError: false,
-		};
-	}
-
-	loadData = () => {
-		this.props.getData().then(this.onDataLoaded).catch(this.onError);
-	};
-
-	onDataLoaded = (items) => {
-		this.setState((state) => ({
-			...state,
-			items,
-			isLoader: false,
-			isError: false,
-		}));
-	};
-
-	onError = () => {
-		this.setState((state) => ({
-			...state,
-			isLoader: false,
-			isError: true,
-		}));
-	};
-
+class ItemsList extends Component {
 	renderItems(items) {
 		if (!items) return;
 		return items.map(({ id, ...others }) => {
@@ -51,31 +17,17 @@ export class ItemsList extends Component {
 		});
 	}
 
-	componentDidMount() {
-		this.loadData();
-	}
-
-	componentDidCatch() {
-		this.onError();
-	}
-
 	render() {
-		const { items, isLoader, isError } = this.state;
+		const { items } = this.props;
 
-		const error = isError ? <ErrorIndicator /> : null;
-		const loader = isLoader ? <Spinner /> : null;
-		const displayItems = !(isLoader || isError)
-			? this.renderItems(items)
-			: null;
+		const displayItems = this.renderItems(items);
 
 		return (
 			<div className="items">
-				<ul className="items-list">
-					{loader}
-					{error}
-					{displayItems}
-				</ul>
+				<ul className="items-list">{displayItems}</ul>
 			</div>
 		);
 	}
 }
+
+export default ItemsList;

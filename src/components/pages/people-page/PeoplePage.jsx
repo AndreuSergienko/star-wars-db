@@ -1,6 +1,8 @@
 import { Component, Fragment } from "react";
 
-import { ItemsList, ItemDetails, Row, ErrorBoundary } from "../..";
+import { ItemDetails, Row, ErrorBoundary, Record } from "../..";
+
+import { PersonsList, PersonDetails } from "../../sw-components";
 
 import { Swapi } from "../../../services";
 
@@ -22,11 +24,8 @@ export class PeoplePage extends Component {
 
 	render() {
 		const { selectedPerson } = this.state;
-		const itemsList = (
-			<ItemsList
-				getData={Swapi.getAllPeople}
-				onItemSelected={this.onPersonSelected}
-			>
+		const personsList = (
+			<PersonsList onItemSelected={this.onPersonSelected}>
 				{({ name, gender }) => (
 					<Fragment>
 						<span className="item d-inline-block mx-3">{name}</span>
@@ -35,25 +34,13 @@ export class PeoplePage extends Component {
 						</span>
 					</Fragment>
 				)}
-			</ItemsList>
+			</PersonsList>
 		);
-		const personDetails = (
-			<ItemDetails
-				getParamsArray={(item) => {
-					const usedParams = ["gender", "birthYear", "eyeColor"];
-
-					return Object.entries(item).filter(([key, _]) =>
-						usedParams.includes(key)
-					);
-				}}
-				getItem={Swapi.getPerson}
-				itemId={selectedPerson}
-			/>
-		);
+		const personDetails = <PersonDetails selectedPerson={selectedPerson} />;
 
 		return (
 			<ErrorBoundary>
-				<Row left={itemsList} right={personDetails} />
+				<Row left={personsList} right={personDetails} />
 			</ErrorBoundary>
 		);
 	}

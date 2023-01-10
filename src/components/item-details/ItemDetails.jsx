@@ -53,11 +53,10 @@ export class ItemDetails extends Component {
 
 	render() {
 		const { item, isLoader, hasWarn } = this.state;
-		const { getParamsArray } = this.props;
 
 		const warning = hasWarn ? <Warn /> : null;
 		const itemView = item ? (
-			<ItemView getParamsArray={getParamsArray} item={item} />
+			<ItemView item={item}>{this.props.children}</ItemView>
 		) : null;
 		const spinner = isLoader ? <Spinner /> : null;
 

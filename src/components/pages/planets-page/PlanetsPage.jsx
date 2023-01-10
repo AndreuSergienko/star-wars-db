@@ -1,9 +1,10 @@
 import { Component, Fragment } from "react";
 
-import { ItemsList, ItemDetails, ErrorBoundary, Row } from "../..";
-import { Swapi } from "../../../services";
+import { ErrorBoundary, Row } from "../..";
 
-export class PlanetPage extends Component {
+import { PlanetsList, PlanetsDetails } from "../../sw-components";
+
+export class PlanetsPage extends Component {
 	constructor() {
 		super();
 
@@ -21,11 +22,8 @@ export class PlanetPage extends Component {
 
 	render() {
 		const { selectedPlanet } = this.state;
-		const itemsList = (
-			<ItemsList
-				getData={Swapi.getAllPlanets}
-				onItemSelected={this.onPlanetSelected}
-			>
+		const planetsList = (
+			<PlanetsList onItemSelected={this.onPlanetSelected}>
 				{({ name, diameter }) => (
 					<Fragment>
 						<span className="item d-inline-block mx-3">{name}</span>
@@ -34,26 +32,14 @@ export class PlanetPage extends Component {
 						</span>
 					</Fragment>
 				)}
-			</ItemsList>
+			</PlanetsList>
 		);
 
-		const planetDetails = (
-			<ItemDetails
-				getParamsArray={(item) => {
-					const usedParams = ["climate", "diameter", "rotationPeriod"];
-
-					return Object.entries(item).filter(([key, _]) =>
-						usedParams.includes(key)
-					);
-				}}
-				getItem={Swapi.getPlanet}
-				itemId={selectedPlanet}
-			/>
-		);
+		const planetDetails = <PlanetsDetails selectedPlanet={selectedPlanet} />;
 
 		return (
 			<ErrorBoundary>
-				<Row left={itemsList} right={planetDetails} />
+				<Row left={planetsList} right={planetDetails} />
 			</ErrorBoundary>
 		);
 	}

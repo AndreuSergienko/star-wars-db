@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Children, cloneElement, Component, Fragment } from "react";
 
 export class ItemView extends Component {
 	constructor() {
@@ -9,22 +9,8 @@ export class ItemView extends Component {
 		};
 	}
 
-	getParams = () => {
-		const { item, getParamsArray } = this.props;
-
-		this.setState((state) => ({
-			...state,
-			params: getParamsArray(item),
-		}));
-	};
-
-	componentDidMount() {
-		this.getParams();
-	}
-
 	render() {
 		const { item } = this.props;
-		const { params } = this.state;
 
 		return (
 			<Fragment>
@@ -36,11 +22,9 @@ export class ItemView extends Component {
 						{item.name}
 					</h4>
 					<div className="item-details-params">
-						{params?.map(([key, value]) => (
-							<span key={key} className="item-details-param">
-								{key}: {value}
-							</span>
-						))}
+						{Children.map(this.props.children, (child) => {
+							return cloneElement(child, { item });
+						})}
 					</div>
 				</div>
 			</Fragment>
