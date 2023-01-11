@@ -3,9 +3,9 @@ import "./RandomPlanet.css";
 
 import { Swapi } from "../../services";
 
-import { Spinner } from "../spinner";
+import { Consumer, Spinner, ErrorIndicator } from "..";
+
 import { RandomPlanetView } from "./random-planet-view";
-import { ErrorIndicator } from "../error-indicator";
 
 export class RandomPlanet extends Component {
 	constructor() {

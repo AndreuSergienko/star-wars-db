@@ -9,3 +9,4 @@ export * from "./items-list";
 export * from "./item-details";
 export * from "./record";
 export * from "./hoc-helper";
+export * from "./swapi-service-context";

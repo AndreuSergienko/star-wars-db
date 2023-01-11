@@ -1,9 +1,10 @@
+import { Component, Fragment } from "react";
+
 import ItemsList from "../items-list";
 
 import { withData } from "../hoc-helper";
 
 import { Swapi } from "../../services";
-import { Component, Fragment } from "react";
 
 const { getAllPeople, getAllPlanets, getAllStarships } = Swapi;
 
