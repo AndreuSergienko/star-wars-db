@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 
 import { ErrorBoundary, Row } from "../..";
 
@@ -23,16 +23,7 @@ export class StarshipsPage extends Component {
 	render() {
 		const { selectedStarship } = this.state;
 		const starshipsList = (
-			<StarshipsList onItemSelected={this.onStarshipSelected}>
-				{({ name, length }) => (
-					<Fragment>
-						<span className="item d-inline-block mx-3">{name}</span>
-						<span className="item d-inline-block mx-3">
-							Length: {length}
-						</span>
-					</Fragment>
-				)}
-			</StarshipsList>
+			<StarshipsList onItemSelected={this.onStarshipSelected} />
 		);
 		const starshipDetails = (
 			<StarshipsDetails selectedStarship={selectedStarship} />

@@ -9,6 +9,7 @@
    display: flex;
    align-items: center;
    gap: 30px;
+   box-shadow: 0 0 5px #ccc;
 }
 
 .random-planet-img {

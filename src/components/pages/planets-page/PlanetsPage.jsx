@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 
 import { ErrorBoundary, Row } from "../..";
 
@@ -23,16 +23,7 @@ export class PlanetsPage extends Component {
 	render() {
 		const { selectedPlanet } = this.state;
 		const planetsList = (
-			<PlanetsList onItemSelected={this.onPlanetSelected}>
-				{({ name, diameter }) => (
-					<Fragment>
-						<span className="item d-inline-block mx-3">{name}</span>
-						<span className="item d-inline-block mx-3">
-							Diameter: {diameter}
-						</span>
-					</Fragment>
-				)}
-			</PlanetsList>
+			<PlanetsList onItemSelected={this.onPlanetSelected} />
 		);
 
 		const planetDetails = <PlanetsDetails selectedPlanet={selectedPlanet} />;

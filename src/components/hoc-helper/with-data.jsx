@@ -47,11 +47,7 @@ export const withData = (View, getData) => {
 
 			const error = isError ? <ErrorIndicator /> : null;
 			const loader = isLoader ? <Spinner /> : null;
-			const content = (
-				<View {...this.props} items={items}>
-					{this.props.children}
-				</View>
-			);
+			const content = <View {...this.props} items={items} />;
 
 			return (
 				<Fragment>

@@ -1,10 +1,8 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 
-import { ItemDetails, Row, ErrorBoundary, Record } from "../..";
+import { Row, ErrorBoundary } from "../..";
 
 import { PersonsList, PersonDetails } from "../../sw-components";
-
-import { Swapi } from "../../../services";
 
 export class PeoplePage extends Component {
 	constructor() {
@@ -25,16 +23,7 @@ export class PeoplePage extends Component {
 	render() {
 		const { selectedPerson } = this.state;
 		const personsList = (
-			<PersonsList onItemSelected={this.onPersonSelected}>
-				{({ name, gender }) => (
-					<Fragment>
-						<span className="item d-inline-block mx-3">{name}</span>
-						<span className="item d-inline-block mx-3">
-							Gender: {gender}
-						</span>
-					</Fragment>
-				)}
-			</PersonsList>
+			<PersonsList onItemSelected={this.onPersonSelected} />
 		);
 		const personDetails = <PersonDetails selectedPerson={selectedPerson} />;
 
