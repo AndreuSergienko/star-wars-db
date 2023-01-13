@@ -2,13 +2,13 @@ import { Component, Fragment } from "react";
 
 import ItemsList from "../items-list";
 
-import { withData } from "../hoc-helper";
+import { withData, withContext } from "../hoc-helper";
 
 import { Swapi } from "../../services";
 
 const { getAllPeople, getAllPlanets, getAllStarships } = Swapi;
 
-export const withChildFn = (View, childrenFn) => {
+const withChildFn = (View, childrenFn) => {
 	return class extends Component {
 		render() {
 			return <View {...this.props}>{childrenFn}</View>;
@@ -37,15 +37,25 @@ const renderNameAndModel = ({ name, model }) => (
 	</Fragment>
 );
 
-export const PersonsList = withData(
-	withChildFn(ItemsList, renderNameAndGender),
-	getAllPeople
+const mapPersonMethodToProps = ({ getAllPeople }) => ({
+	getData: getAllPeople,
+});
+const mapPlanetMethodToProps = ({ getAllPlanets }) => ({
+	getData: getAllPlanets,
+});
+const mapStarshipMethodToProps = ({ getAllStarships }) => ({
+	getData: getAllStarships,
+});
+
+export const PersonsList = withContext(
+	withData(withChildFn(ItemsList, renderNameAndGender)),
+	mapPersonMethodToProps
 );
-export const StarshipsList = withData(
-	withChildFn(ItemsList, renderNameAndModel),
-	getAllStarships
+export const StarshipsList = withContext(
+	withData(withChildFn(ItemsList, renderNameAndModel)),
+	mapPlanetMethodToProps
 );
-export const PlanetsList = withData(
-	withChildFn(ItemsList, renderNameAndDiameter),
-	getAllPlanets
+export const PlanetsList = withContext(
+	withData(withChildFn(ItemsList, renderNameAndDiameter)),
+	mapStarshipMethodToProps
 );

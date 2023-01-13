@@ -2,7 +2,7 @@ import { Component, Fragment } from "react";
 
 import { ErrorIndicator, Spinner } from "..";
 
-export const withData = (View, getData) => {
+export const withData = (View) => {
 	return class extends Component {
 		constructor() {
 			super();
@@ -31,6 +31,7 @@ export const withData = (View, getData) => {
 		};
 
 		loadData = () => {
+			const { getData } = this.props;
 			getData().then(this.onDataLoaded).catch(this.onError);
 		};
 

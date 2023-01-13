@@ -1,43 +1,17 @@
-import { ItemDetails, Record, Consumer } from "..";
+import {
+	PersonDetailsContext,
+	StarshipDetailsContext,
+	PlanetDetailsContext,
+} from "./context-details";
 
 export const PersonDetails = ({ selectedPerson }) => {
-	return (
-		<Consumer>
-			{({ getPerson }) => (
-				<ItemDetails getItem={getPerson} itemId={selectedPerson}>
-					<Record field="gender" label="Gender" />
-					<Record field="birthYear" label="Birth Year" />
-					<Record field="eyeColor" label="Eye Color" />
-				</ItemDetails>
-			)}
-		</Consumer>
-	);
+	return <PersonDetailsContext selectedPerson={selectedPerson} />;
 };
 
 export const PlanetsDetails = ({ selectedPlanet }) => {
-	return (
-		<Consumer>
-			{({ getPlanet }) => (
-				<ItemDetails getItem={getPlanet} itemId={selectedPlanet}>
-					<Record field="climate" label="Climate" />
-					<Record field="diameter" label="Diameter" />
-					<Record field="rotationPeriod" label="Rotation Period" />
-				</ItemDetails>
-			)}
-		</Consumer>
-	);
+	return <PlanetDetailsContext selectedPlanet={selectedPlanet} />;
 };
 
 export const StarshipsDetails = ({ selectedStarship }) => {
-	return (
-		<Consumer>
-			{({ getStarship }) => (
-				<ItemDetails getItem={getStarship} itemId={selectedStarship}>
-					<Record field="length" label="Length" />
-					<Record field="crew" label="Crew" />
-					<Record field="passengers" label="Passengers" />
-				</ItemDetails>
-			)}
-		</Consumer>
-	);
+	return <StarshipDetailsContext selectedStarship={selectedStarship} />;
 };
