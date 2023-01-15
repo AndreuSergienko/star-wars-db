@@ -53,9 +53,9 @@ export const PersonsList = withContext(
 );
 export const StarshipsList = withContext(
 	withData(withChildFn(ItemsList, renderNameAndModel)),
-	mapPlanetMethodToProps
+	mapStarshipMethodToProps
 );
 export const PlanetsList = withContext(
 	withData(withChildFn(ItemsList, renderNameAndDiameter)),
-	mapStarshipMethodToProps
+	mapPlanetMethodToProps
 );
