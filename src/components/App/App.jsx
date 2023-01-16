@@ -18,8 +18,7 @@ export class App extends Component {
 						<Header />
 						<RandomPlanet />
 						<PeoplePage />
-						<StarshipsPage />
-						<PlanetsPage />
+						
 					</div>
 				</Provider>
 			</ErrorBoundary>
