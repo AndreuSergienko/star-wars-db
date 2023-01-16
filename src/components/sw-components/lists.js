@@ -4,10 +4,6 @@ import ItemsList from "../items-list";
 
 import { withData, withContext } from "../hoc-helper";
 
-import { Swapi } from "../../services";
-
-const { getAllPeople, getAllPlanets, getAllStarships } = Swapi;
-
 const withChildFn = (View, childrenFn) => {
 	return class extends Component {
 		render() {
